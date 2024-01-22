@@ -142,7 +142,7 @@ export const playersQuery = `
 *[_type == 'player'] {
   name,
   position,
-  "image": coalesce(image.asset->url,"https://www.elfutbolero.us/_next/image?url=https%3A%2F%2Fwww.elfutbolero.us%2Fimage%2Felfutbolerous%2Fthe-footballer-who-shines-in-europe-and-who-real-madrid-are-looking-for-1702068663-hq.webp&w=3840&q=75"),
+  "image": coalesce(image.asset->url,"https://e0.365dm.com/20/01/2048x1152/skysports-paulo-dybala-juventus_4901489.jpg?20200125084648"),
     team->{
       name,
       "logo": logo.asset->url
