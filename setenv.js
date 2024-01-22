@@ -5,7 +5,7 @@ const setEnv = () => {
     require('dotenv').config()
     const {SANITY_API_VERSION, SANITY_DATASET, SANITY_PROJECT_ID, SANITY_PROJECT_TITLE,token } = process.env
     const envConfigFile = `export const environment = {
-        production: false,
+        production: true,
         sanity : {
             SANITY_PROJECT_ID:"${SANITY_PROJECT_ID}",
             SANITY_DATASET:"${SANITY_DATASET}",

@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import sanityClient, { ClientConfig, SanityClient, createClient } from '@sanity/client'
-import { map, Observable } from 'rxjs'
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,7 +14,7 @@ export class SanityClientService {
     useCdn: true,
     token: environment.sanity.token
   }
-
+  
   constructor() {
     this.client = createClient(this.clientConfig)
   }
