@@ -1,0 +1,25 @@
+<div class="w-full dark:text-white">
+  <div class="m-5 bg-white dark:bg-darkbg p-5 rounded-3xl space-y-10">
+    <h1 class="text-xl xs:text-2xl sm:text-3xl font-bold text-stone-600 dark:text-stone-200">
+      Belongings clubs
+    </h1>
+    <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
+      <div
+        *ngFor="let item of clubs"
+        class="transition-all rounded-md cursor-pointer duration-300 dark:opacity-70 dark:hover:opacity-100 group border flex flex-col items-center p-3 dark:border-stone-500 dark:hover:border-stone-300 border-stone-300 hover:border-stone-500"
+      >
+        <div class="w-full grow border overflow-hidden">
+          <img
+            [src]="item.logo"
+            alt="club logo"
+            class="transition-all duration-300 group-hover:scale-110"
+          />
+        </div>
+        <div class="w-full flex items-center justify-between mt-4">
+          <span>{{item.name}}</span>
+          <span>&rightarrow;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

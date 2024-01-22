@@ -1,0 +1,206 @@
+<div class="flex flex-col mx-5 dark:text-white">
+  <div class="w-full relative h-52 lg:h-72 overflow-hidden bg-black">
+    <div class="w-full h-full absolute top-0 left-0 z-0">
+      <img
+        ngOptimizedImage
+        src="assets/svgs/images.jpg"
+        alt="banner football image"
+        class="w-[100%] h-full object-cover opacity-60"
+      />
+    </div>
+    <div
+      class="w-full p-5 relative z-10 h-full flex items-center justify-center"
+    >
+      <h1 class="font-[blackone] text-3xl lg:text-5xl text-white">
+        Belongings league
+      </h1>
+    </div>
+  </div>
+  <div
+    class="bg-white flex flex-col py-5 sm:p-5 rounded-md divide-y-2 divide-[#EFEFEF] dark:bg-transparent"
+  >
+    <div class="w-full">
+      <h1>⚽ Football Match</h1>
+      <div *ngIf="iSloading; else match">
+        <app-loader />
+      </div>
+      <ng-template #match>
+        <div class="w-full text-sm sm:text-base flex cursor-pointer">
+          <div
+            [ngClass]="{
+              'border-b-blue-600 dark:text-white': ActiveTab() === 'latest',
+              'w-full py-2 text-center border-b-2 text-neutral-500': true
+            }"
+            (click)="setActiveTab('latest')"
+          >
+            Latest match
+          </div>
+          <div
+            [ngClass]="{
+              'border-b-blue-600 dark:text-white': ActiveTab() === 'upcoming',
+              'w-full py-2 text-center border-b-2 text-neutral-500': true
+            }"
+            (click)="setActiveTab('upcoming')"
+          >
+            Coming Match
+          </div>
+        </div>
+
+        <div
+          class="w-full divide-y-2 overflow-x-scroll divide-stone-200"
+          *ngIf="ActiveTab() === 'latest'"
+        >
+          <div
+            *ngFor="let item of matches"
+            class="w-full py-3 hover:bg-neutral-100 dark:hover:bg-neutral-900/30 cursor-pointer font-semibold dark:text-white flex items-center justify-between"
+            (click)="navigateToMatch(item._id)"
+          >
+            <div class="flex w-full justify-around items-center">
+              <div class="flex items-center gap-2">
+                <img
+                  [src]="item.homeTeam.logo"
+                  alt="awaa"
+                  class="rounded-full h-7 w-7 overflow-hidden"
+                />
+                <span class="text-sm">{{ item.homeTeam.abbr }}</span>
+              </div>
+              <p
+                class="w-fit h-fit p-1 bg-[#5742A9] dark:bg-[rgb(245,196,81,10%)] rounded-md bg-opacity-50 text-[#5742A9] dark:text-[#F5C451]"
+              >
+                {{ item.homeGoals }} - {{ item.awayGoals }}
+              </p>
+              <div class="flex justify-end items-center gap-2">
+                <span class="text-sm">{{ item.awayTeam.abbr }}</span>
+                <img
+                  [src]="item.awayTeam.logo"
+                  alt="away team logo"
+                  class="rounded-full h-7 w-7 overflow-hidden"
+                />
+              </div>
+            </div>
+            <div
+              class="hidden sm:flex gap-2 sm:gap-0 justify-between items-center w-full"
+            >
+              <div class="sm:w-full flex items-center justify-center">
+                <p
+                  class="bg-red-500 my-1 sm:my-0 dark:bg-white/20 dark:text-white bg-opacity-30 text-red-500 w-fit rounded-md text-sm p-1 whitespace-nowrap"
+                >
+                  full-time
+                </p>
+              </div>
+              <p class="text-neutral-500 sm:w-full text-center">
+                {{ item.date }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <div
+        class="w-full divide-y-2 divide-stone-200"
+        *ngIf="ActiveTab() === 'upcoming'"
+      >
+        <div
+          *ngFor="let item of fixtures"
+          class="w-full py-3 font-semibold dark:text-white flex flex-col md:flex-row items-center justify-between"
+        >
+          <div
+            class="grid grid-flow-col w-full space-x-4 whitespace-nowrap items-center"
+          >
+            <div class="flex items-center gap-2">
+              <img
+                [src]="item.homeTeam.logo"
+                alt="awaa"
+                class="rounded-full h-7 w-7 overflow-hidden"
+              />
+              <span class="text-sm">{{ item.homeTeam.abbr }}</span>
+            </div>
+            <p
+              class="w-fit h-fit p-1 bg-[#5742A9] dark:bg-[rgb(245,196,81,10%)] rounded-md bg-opacity-50 text-[#5742A9] dark:text-[#F5C451]"
+            >
+              {{ formatDateAndTime(item.date).formattedTime }}
+            </p>
+            <div class="flex place-self-end items-center gap-2">
+              <span class="text-sm">{{ item.awayTeam.abbr }}</span>
+              <img
+                [src]="item.awayTeam.logo"
+                alt="away team logo"
+                class="rounded-full h-7 w-7 overflow-hidden"
+              />
+            </div>
+          </div>
+          <div
+            class="text-neutral-500 my-3 sm:my-0 flex justify-between px-0 xs:px-2 sm:px-14 gap-4 items-center w-full"
+          >
+            <p>{{ formatDateAndTime(item.date).formattedDate }}</p>
+            <p>{{item.venue}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col py-5">
+      <h1 class="my-4">🏆 Standings</h1>
+      <div *ngIf="iSloading; else stats" class="flex flex-col">
+        <app-loader />
+      </div>
+      <ng-template #stats>
+        <div class="w-full overflow-x-scroll">
+          <table
+            [cellPadding]="10"
+            [border]="0"
+            [cellSpacing]="0"
+            class="w-full bg-transparent rounded-md bg-darkbg table-auto"
+          >
+            <thead
+              class="text-xs text-white uppercase bg-blue-700 dark:bg-blue-300 dark:bg-opacity-25"
+            >
+              <tr>
+                <th scope="col" class="underline rounded-tl-md">pos</th>
+                <th scope="col" class="flex-1 text-start">club</th>
+                <th scope="col">MP</th>
+                <th scope="col">W</th>
+                <th scope="col">D</th>
+                <th scope="col">L</th>
+                <th scope="col">GF</th>
+                <th scope="col">GA</th>
+                <th scope="col">GD</th>
+                <th scope="col" class="rounded-tr-md">Pts</th>
+              </tr>
+            </thead>
+            <tbody
+              class="divide-y border w-full border-slate-300 dark:border-slate-700 divide-slate-300 dark:divide-slate-700 text-black dark:text-white"
+            >
+              <tr
+                *ngFor="let item of table; index as i"
+                class="sm:my-2 sm:p-2 text-center"
+              >
+                <td class="">{{ i + 1 }}</td>
+                <td class="flex items-center whitespace-nowrap gap-2">
+                  <div class="h-7 w-7">
+                    <img
+                      [src]="item.image"
+                      alt="team image"
+                      class="rounded-full h-full w-full overflow-hidden"
+                    />
+                  </div>
+                  <span>{{ item.name }}</span>
+                </td>
+                <td class="">{{ item.wins }}</td>
+                <td class="">{{ item.draws }}</td>
+                <td class="">{{ item.draws }}</td>
+                <td class="">{{ item.losses }}</td>
+                <td class="">{{ item.points }}</td>
+                <td class="">{{ item.points }}</td>
+                <td class="">{{ item.points }}</td>
+                <td class="">{{ item.points }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- <app-button (btnClick)="click()" [variant]="v2">
+    
+</app-button> -->

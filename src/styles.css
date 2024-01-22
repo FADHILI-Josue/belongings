@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+*::-webkit-scrollbar-thumb {
+  /* background-color: #e6e6e6; */
+  border-radius: 5px;
+  background:#1baaae;
+  background-image:-webkit-linear-gradient(20deg, skyblue 25%, #BFBCBC 25%, #BFBCBC 50%, skyblue 50%, skyblue 75%, #BFBCBC 75%)
+}
+
+@font-face {
+  font-family: blackone;
+  src: url('assets/fonts/BlackOpsOne-Regular.ttf');
+}

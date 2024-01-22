@@ -1,0 +1,56 @@
+<div class="w-full dark:text-white">
+  <div class="my-5 mx-2 sm:m-5 bg-white dark:bg-darkbg p-3 sm:p-5 rounded-3xl space-y-10">
+    <div class="w-full py-5">
+      <h1 class="m-4 text-xl">Standings</h1>
+      <div class="w-full overflow-x-scroll">
+        <table
+          [cellSpacing]="0"
+          class="w-full table-auto text-[0.5] xs:text-xs sm:text-base cursor-pointer rounded-md text-center text-neutral-800 dark:text-white"
+        >
+          <thead class="my-3 px-5">
+            <tr class="[text]-white text-xs sm:text-base">
+              <th></th>
+              <th class="flex-1 text-start">club</th>
+              <th>MP</th>
+              <th>W</th>
+              <th>D</th>
+              <th>L</th>
+              <th>GF</th>
+              <th>GA</th>
+              <th>GD</th>
+              <th>Pts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of table; index as i"
+              [class.bg-blue-300]="i % 2 == 0"
+              class="bg-opacity-25 p-20 transition-all hover:bg-stone-400 dark:hover:bg-[#f5f5f5] dark:hover:text-black rounded-3xl"
+            >
+              <td class="rounded-l-md">{{ i + 1 }}</td>
+              <td class="flex whitespace-nowrap items-center gap-2 pr-10">
+                <div class="h-4 w-4 sm:h-7 sm:w-7">
+                  <img
+                    [src]="item.image"
+                    alt="awaa"
+                    class="rounded-full h-full w-full overflow-hidden"
+                  />
+                </div>
+                <span>{{item.name}}</span>
+              </td>
+
+              <td>{{ item.playedMatches }}</td>
+              <td>{{item.wins}}</td>
+              <td>{{item.draws}}</td>
+              <td>{{item.losses}}</td>
+              <td>{{ item.goalsFor }}</td>
+              <td>{{ item.goalsAgainst }}</td>
+              <td>{{ item.goalsDifference }}</td>
+              <td class="rounded-r-md">{{item.points}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

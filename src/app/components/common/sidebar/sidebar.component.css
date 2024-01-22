@@ -1,0 +1,19 @@
+.sidlink {
+  position: relative;
+}
+
+.sidlink::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.sidlink:hover::before {
+  transform: scaleX(1);
+}

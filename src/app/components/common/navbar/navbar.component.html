@@ -1,0 +1,10 @@
+<div class="sticky -top-0.5 z-30 lg:relative w-full py-3 bg-white dark:bg-[#1B1C21] border-b-[#D3D3D3] dark:border-b-[#313131] flex items-center justify-between px-3">
+    <div class="relative w-7 h-7 m-2 flex lg:hidden text-black dark:text-white" (click)="openSidebar($event)" #btnEl>
+        <svg viewBox="-2.4 -2.4 28.80 28.80" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g> <path d="M4 12H20M4 8H20M4 16H12" stroke="currentColor" stroke-width="2.376" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+    </div>
+    <div class="w-1/2 flex text-black dark:text-stone-300 items-center space-x-3 px-3 bg-[#D9D9D9] dark:bg-[#2E3034] rounded-md">
+        <label for="search" class="text-sm sm:text-base"><fa-icon [icon]="faSearch" /></label>
+        <input id="search" type="text" placeholder="Search belongings" class="flex placeholder:text-xs sm:placeholder:text-base cursor-not-allowed min-w-[5rem] h-10 w-full border-none outline-none bg-transparent text-sm  disabled:cursor-not-allowed disabled:opacity-50">
+    </div>
+    <button [class]="cn(subscribeButtonVariant,'mr-1 sm:mr-5 text-xs xs:text-sm cursor-not-allowed')">Subscribe</button>
+</div>

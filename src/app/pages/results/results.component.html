@@ -1,0 +1,49 @@
+<div class="w-full dark:text-white">
+  <div class="m-3 sm:m-5 bg-white dark:bg-darkbg p-5 rounded-3xl space-y-10">
+    <h1 class="text-xl xs:text-2xl sm:text-3xl font-bold text-stone-600 dark:text-stone-200">
+      Belongings Matches
+    </h1>
+    <div *ngFor="let item of [12, 2, 334, 5, 4]" class="w-full space-y-3">
+      <div class="flex gap-5 flex-wrap items-center justify-between">
+        <h1 class="font-bold text-base xs:text-xl sm:text-2xl text-neutral-600 dark:text-white">
+          Saturday 25 November 2023
+        </h1>
+        <div class="flex items-center text-neutral-500 text-sm xs:text-xl font-bold">
+          <span>Belongings</span> <app-logo [width]="40" [height]="40" />
+          <span>League</span>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-start gap-[20%] items-center">
+        <div class="flex gap-2 xs:gap-5 items-center">
+          <div class="flex items-center gap-2">
+            <span class="text-xs xs:text-sm sm:text-xl">Argentina</span>
+                   <div class="h-5 w-5 sm:h-7 sm:w-7">
+                    <img
+                  src="assets/svgs/Frame.png"
+                  alt="awaa"
+                  class="rounded-full h-full w-full overflow-hidden"
+                />
+            </div>
+          </div>
+          <!-- TODO:CHANGE TO DYNAMIC DATA -->
+          <p class="text-xs xs:text-sm sm:text-base rounded-md whitespace-nowrap border border-stone-300 px-2 xs:px-3">
+            2-3
+          </p>
+          <div class="flex items-center gap-2">
+                   <div class="h-5 w-5 sm:h-7 sm:w-7">
+                    <img
+                  src="assets/svgs/Frame.png"
+                  alt="awaa"
+                  class="rounded-full h-full w-full overflow-hidden"
+                />
+            </div>
+            <span class="text-xs xs:text-sm sm:text-xl">portugal</span>
+          </div>
+        </div>
+        <p class="text-neutral-500 py-2 text-xs sm:text-base whitespace-nowrap dark:text-white">
+          Nyabihu stadium
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
