@@ -40,11 +40,9 @@ export class HomePageComponent implements OnInit {
   }
   ActiveTab = signal('latest');
   setActiveTab(tab: string) {
-    console.log(this.ActiveTab())
     this.ActiveTab() === 'latest' ? this.ActiveTab.set(tab) : this.ActiveTab.set(tab);
   }
   tab = this.ActiveTab();
-  click = () => console.log('hello')
   v1 = VariantEnum.default
   v2 = VariantEnum.destructive
 

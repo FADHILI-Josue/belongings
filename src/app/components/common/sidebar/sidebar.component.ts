@@ -20,7 +20,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   sidebarOpensub = new BehaviorSubject(false);
   private subscription:Subscription;
   constructor(private uiService:UiService,private router: Router,private elementRef: ElementRef,private cdr: ChangeDetectorRef) {
-    this.subscription = this.uiService.getSidebarSheetObservable().subscribe((e:boolean) =>{ console.log(e); this.sidebarOpensub.next(e); this.sidebarOpensub.subscribe((e)=> this.sidebarOpen = e)});
+    this.subscription = this.uiService.getSidebarSheetObservable().subscribe((e:boolean) =>{this.sidebarOpensub.next(e); this.sidebarOpensub.subscribe((e)=> this.sidebarOpen = e)});
   }
   @HostListener('document:click', ['$event'])
   public onClick(event: MouseEvent): void {

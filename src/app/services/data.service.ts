@@ -33,7 +33,6 @@ export class DataService {
     await this.sanityClient
       .fetch(matchesQuery)
       .then(result => {
-        console.log(result)
         this.playedMatchesSubject.next(result.map((e: any) => ({
           ...e, homeGoals: e.homeGoals ?? 0,
           awayGoals: e.awayGoals?? 0, date: format(new Date(e.date), 'dd MMMM yyyy')
@@ -52,7 +51,6 @@ export class DataService {
     await this.sanityClient
       .fetch(fixturesQuery)
       .then(result => {
-        console.log({ result });
         this.fixturesSubject.next(result);
       })
       .catch(error => {
@@ -101,7 +99,6 @@ export class DataService {
       .fetch(standingsQuery)
       .then(result => {
         const res = calculateStats(result)
-        console.log(res)
        return this.standingsSubject.next(res);
       })
       .catch(error => {
