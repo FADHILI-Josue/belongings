@@ -38,12 +38,6 @@ export default defineType({
             },
         }),
         defineField({
-            name: "players",
-            title: "Players",
-            type: "array",
-            of: [{ type: "reference", to: { type: "player" } }],
-                }),
-        defineField({
             name: 'stadium',
             title: 'Stadium',
             type: 'string',
@@ -57,6 +51,11 @@ export default defineType({
             description: 'team coach',
             to: {type: 'coach'}
         }),
+        defineField({
+            name: 'socialMedia',
+            title: 'Social Media',
+            type: 'socialMedia'
+        })
     ],
     preview: {
         select: { title: 'name', media: 'logo' },

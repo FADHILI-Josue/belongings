@@ -11,7 +11,7 @@ export class StandingsComponent implements OnInit {
   public table:any[] = [];
   ngOnInit(): void {
     this.dataService.getStandings();
-    this.dataService.standings$.subscribe((s) => {console.log(s);this.table = s});
+    this.dataService.standings$.subscribe((s) => {this.table = s});
     this.dataService.loading$.subscribe((loading) => this.iSloading = loading);
   }
   constructor(private dataService: DataService) {}
