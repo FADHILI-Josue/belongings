@@ -5,7 +5,6 @@ import { Club } from 'src/app/services/data.types';
 @Component({
   selector: 'app-clubs',
   templateUrl: './clubs.component.html',
-  styleUrls: ['./clubs.component.css']
 })
 
 

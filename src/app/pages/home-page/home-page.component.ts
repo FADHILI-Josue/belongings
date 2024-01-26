@@ -20,6 +20,7 @@ export class HomePageComponent implements OnInit {
   public iSloading = true;
 
   ngOnInit(): void {
+    console.log(process.env["token"])
     this.dataService.getFixtures();
     this.dataService.getMatches();
     this.dataService.getFixtures();

@@ -1,3 +1,5 @@
+console.log(process.env["token"])
+
 export const environment = {
     production: true,
     sanity: {

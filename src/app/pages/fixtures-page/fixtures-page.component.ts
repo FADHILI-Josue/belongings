@@ -7,7 +7,6 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-fixtures-page',
   templateUrl: './fixtures-page.component.html',
-  styleUrls: ['./fixtures-page.component.css']
 })
 export class FixturesPageComponent implements OnInit {
   public fixtures:fixture[] = [];
