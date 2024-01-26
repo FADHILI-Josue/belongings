@@ -32,3 +32,4 @@
 # other features
 - [ ] Implement player page
 - [ ] Implement club page
+- [ ] making search logic with algolia

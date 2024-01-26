@@ -36,8 +36,7 @@ export enum playerPosition {
     CM = "Central Midfielder",
     DM = "Defensive Midfielder",
     AM = "Attacking Midfielder",
-    WM = "Winger",
     CF = "Central Forward",
     ST = "Striker",
-    W = "Wide Player",
+    W = "Winger",
 }
