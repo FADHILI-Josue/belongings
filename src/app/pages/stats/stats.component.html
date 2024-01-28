@@ -6,13 +6,13 @@
     <!-- stats -->
     <div class="w-full flex [&>*]:grow [&>*]:shrink-0 md:grid overflow-x-scroll sm:overflow-x-auto grid-cols-4 justify-items-stretch md:grid-cols-2 gap-10">
       <div *ngFor="
-      let stat of ['goals', 'passes', 'assists', 'clean sheets']
+      let stat of [{title:'goals', values: playerStats.mostGoals}, {title:'passes', values:playerStats.mostPasses}, {title:'assists', values: playerStats.mostAssists}, {title:'Tackles', values: playerStats.mostTackles}]
       index as i" class="flex flex-col">
-        <h1 class="text-lg">{{stat}}</h1>
+        <h1 class="text-lg">{{stat.title}}</h1>
         <div class="flex flex-col divide-y divide-stone-300">
           <div
             *ngFor="
-              let item of [43, 40, 35, 30, 29, 27, 26, 25, 23, 20];
+              let player of stat.values;
               index as i
             "
             class="p-2 text-blue-500 dark:text-white flex justify-between items-center gap-6"
@@ -20,14 +20,14 @@
             <div class="flex items-center gap-3">
               <span class="text-sm font-bold">{{ i + 1 }}</span>
               <div class="flex items-center gap-3">
-                <img src="assets/svgs/Frame.png" alt="team" class="h-7 w-7" />
+                <img [src]="player.team.logo" [alt]="player.team.name" class="h-7 w-7" />
                 <div class="flex flex-col">
-                  <p class="text-sm sm:text-base font-semibold">Erling Halland</p>
-                  <p class="text-xs text-stone-500">Man City</p>
+                  <p class="text-sm sm:text-base font-semibold">{{player.name}}</p>
+                  <p class="text-xs text-stone-500">{{player.team.name}}</p>
                 </div>
               </div>
             </div>
-            <span class="font-bold text-stone-500">{{ item }}</span>
+            <span class="font-bold text-stone-500">{{player.value}}</span>
           </div>
         </div>
       </div>
@@ -41,13 +41,13 @@
     <!-- Team stats -->
     <div class="w-full flex [&>*]:grow [&>*]:shrink-0 md:grid overflow-x-scroll sm:overflow-x-auto grid-cols-4 justify-items-stretch md:grid-cols-2 gap-10">
       <div *ngFor="
-      let stat of ['goals', 'passes', 'assists', 'clean sheets']
+      let stat of [{title:'Corners', values: teamStats.mostCorners}, {title:'Shots on Target', values:teamStats.mostShotsOnTarget}, {title:'Shots', values: teamStats.mostShots}, {title:'Free Kicks', values: teamStats.mostFreeKicks}]
       index as i" class="flex flex-col">
-        <h1 class="text-lg">{{stat}}</h1>
+        <h1 class="text-lg">{{stat.title}}</h1>
         <div class="flex flex-col divide-y divide-stone-300">
           <div
             *ngFor="
-              let item of [43, 40, 35, 30, 29, 27, 26, 25, 23, 20];
+              let team of stat.values;
               index as i
             "
             class="p-2 text-blue-500 dark:text-white flex justify-between items-center gap-6"
@@ -55,14 +55,14 @@
             <div class="flex items-center gap-3">
               <span class="text-sm font-bold">{{ i + 1 }}</span>
               <div class="flex items-center gap-3">
-                <img src="assets/svgs/Frame.png" alt="team" class="h-7 w-7" />
+                <img [src]="team.image" [alt]="team.name" class="h-7 w-7" />
                 <div class="flex flex-col">
-                  <p class="text-sm sm:text-base font-semibold">Thunders</p>
-                  <p class="text-xs text-stone-500">nyabihu stadium</p>
+                  <p class="text-sm sm:text-base font-semibold">{{team.name}}</p>
+                  <p class="text-xs text-stone-500">{{team.stadium}}</p>
                 </div>
               </div>
             </div>
-            <span class="font-bold text-stone-500">{{ item }}</span>
+            <span class="font-bold text-stone-500">{{ team.value }}</span>
           </div>
         </div>
       </div>

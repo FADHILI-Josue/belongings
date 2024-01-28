@@ -1,0 +1,22 @@
+<h1 class="text-lg">{{name}}</h1>
+<div class="flex flex-col divide-y divide-stone-300">
+          <div
+            *ngFor="
+              let player of stats;
+              index as i
+            "
+            class="p-2 text-blue-500 dark:text-white flex justify-between items-center gap-6"
+          >
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold">{{ i + 1 }}</span>
+              <div class="flex items-center gap-3">
+                <img src="assets/svgs/Frame.png" alt="team" class="h-7 w-7" />
+                <div class="flex flex-col">
+                  <p class="text-sm sm:text-base font-semibold">{{player.name}}</p>
+                  <p class="text-xs text-stone-500">{{subHeader}}</p>
+                </div>
+              </div>
+            </div>
+            <span class="font-bold text-stone-500">234</span>
+          </div>
+        </div>

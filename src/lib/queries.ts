@@ -124,13 +124,21 @@ export const matchesQuery = `*[_type == 'match' && status=='played'] | order(dat
 }
 `
 
-const playerStatsQuery = `*[_type == 'player'] {
+export const playerStatsQuery = `*[_type == 'player'] {
   _id,
   name,
-  'goals': count(*[_type == 'match' && ^._id in goals[].scorer._ref]),
-  'assists': count(*[_type == 'match' && ^._id in assists[].assister._ref]),
-  'passes': count(*[_type == 'match' && ^._id in passes[].player._ref]),
-  'tackles': count(*[_type == 'match' && ^._id in tackles[].player._ref])
+  team->{
+    name,
+    "logo": logo.asset->url
+  },
+  'goals': coalesce(*[_type == 'match' && ^._id in goals[].scorer._ref]{
+    "count": count(goals[^.^._id == scorer._ref]),
+  }, 0),
+  'assists': coalesce(*[_type == 'match' && ^._id in assists[].assister._ref]{
+    "count": count(assists[^.^._id == assister._ref]),
+  }, 0),
+  'passes': *[_type == 'match' && ^._id in passes[].player._ref].passes[^._id == player._ref].passes,
+  'tackles': *[_type == 'match' && ^._id in tackles[].player._ref].tackles[^._id == player._ref].tackles,
 }
 `
 
@@ -142,7 +150,7 @@ export const playersQuery = `
 *[_type == 'player'] {
   name,
   position,
-  "image": coalesce(image.asset->url,"https://e0.365dm.com/20/01/2048x1152/skysports-paulo-dybala-juventus_4901489.jpg?20200125084648"),
+  "image": coalesce(image.asset->url,"https://images2.minutemediacdn.com/image/upload/c_crop,w_4026,h_2264,x_0,y_125/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/images/GettyImages/mmsport/90min_en_international_web/01h9t34b6e4f292pncf7.jpg"),
     team->{
       name,
       "logo": logo.asset->url
@@ -155,5 +163,18 @@ export const teamsQuery = `
 *[_type == 'team'] {
   name,
   "logo":logo.asset->url
+}
+`
+
+export const teamStatsQuery = `
+*[_type == 'team'] {
+  name,
+  abbr,
+  stadium,
+  'image': logo.asset->url,
+  'corners': *[_type == 'match' && (^._id == homeTeam._ref || ^._id == awayTeam._ref) && status=="played"].teamStats[^._id==team._ref].corners,
+  'shotsOnTarget': *[_type == 'match' && (^._id == homeTeam._ref || ^._id == awayTeam._ref) && status=="played"].teamStats[^._id==team._ref].shotsOnTarget,
+  'shots': *[_type == 'match' && (^._id == homeTeam._ref || ^._id == awayTeam._ref) && status=="played"].teamStats[^._id==team._ref].shots,
+  'freeKicks': *[_type == 'match' && (^._id == homeTeam._ref || ^._id == awayTeam._ref) && status=="played"].teamStats[^._id==team._ref].freeKicks,
 }
 `

@@ -49,7 +49,7 @@ export default defineType({
             title: 'Coach',
             type: 'reference',
             description: 'team coach',
-            to: {type: 'coach'}
+            to: { type: 'coach' }
         }),
         defineField({
             name: 'socialMedia',

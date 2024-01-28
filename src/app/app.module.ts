@@ -24,6 +24,8 @@ import { ClubsComponent } from './pages/clubs/clubs.component';
 import { PlayersComponent } from './pages/players/players.component';
 import { LoaderComponent } from './components/ui/loader/loader.component';
 import { SvgIconComponent } from './components/ui/svg-icon/svg-icon.component';
+import { CardloaderComponent } from './components/ui/cardloader/cardloader.component';
+import { StatsCardComponent } from './components/stats/stats-card/stats-card.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { SvgIconComponent } from './components/ui/svg-icon/svg-icon.component';
     PlayersComponent,
     LoaderComponent,
     SvgIconComponent,
+    CardloaderComponent,
+    StatsCardComponent,
   ],
   imports: [
     BrowserModule,

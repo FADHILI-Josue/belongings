@@ -3,6 +3,10 @@
     <h1 class="text-xl xs:text-2xl sm:text-3xl font-bold text-stone-600 dark:text-stone-200">
       Belongings clubs
     </h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5" *ngIf="iSloading; else p">
+      <app-cardloader *ngFor="let loader of [1,2,3,4]" />
+    </div>
+    <ng-template #p>
     <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
       <div
         *ngFor="let item of clubs"
@@ -21,5 +25,6 @@
         </div>
       </div>
     </div>
+  </ng-template>
   </div>
 </div>

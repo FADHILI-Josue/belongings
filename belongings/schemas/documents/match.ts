@@ -81,8 +81,8 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'passess',
-      title: 'Passess',
+      name: 'passes',
+      title: 'Passes',
       type: 'array',
       of: [
         {
@@ -90,7 +90,7 @@ export default defineType({
           fields: [
             { name: 'player', title: 'Player', type: 'reference', to: [{ type: 'player' }] },
             { name: 'team', title: 'team', type: 'reference', to: [{ type: 'team' }] },
-            { name: 'passess', title: 'passess', type: 'number', initialValue: 752 },
+            { name: 'passes', title: 'passes', type: 'number', initialValue: 46 },
           ],
         },
       ],
