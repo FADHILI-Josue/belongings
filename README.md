@@ -43,6 +43,9 @@ belongings leauge is project made when exploring angular, aims to provide a cent
 
     ```
 
+#### content creation
+ !! any one who want to create content on the cms can mail me at <a href="mailto:fadhilijosue27@gmail.com">my email</a> or send me a message at x([twitter](https://twitter.com/fadhilijosue)) 
+
 ### Opening Issues
 If you encounter any bugs, have suggestions, or would like to propose new features, please open an [issue][issues] in the Issues section.
 
