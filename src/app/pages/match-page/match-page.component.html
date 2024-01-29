@@ -1,53 +1,55 @@
-<div class="w-full p-5">
+<div class="w-full p-2 sm:p-5">
   <div class="w-full dark:text-white">
     <div class="w-full relative">
       <div
         class="absolute opacity-10 h-full w-full top-0 left-0 flex flex-col sm:flex-row justify-between"
       >
         <img
-          src="assets/svgs/Frame.png"
+          [src]="match.homeTeam.logo"
           class="w-full sm:w-1/2 h-1/2 sm:h-full object-cover"
-          alt="df"
+          [alt]="match.homeTeam.name"
         />
         <img
-          src="assets/svgs/bel.png"
-          class="w-full sm:w-1/2 h-[45%] mt-10 sm:mt-0 sm:h-full object-cover"
-          alt="df"
+          [src]="match.awayTeam.logo"
+          class="w-full sm:w-1/2 h-[45%] sm:h-full object-cover"
+          [alt]="match.awayTeam.name"
         />
       </div>
       <div
         class="w-full h-full py-10 flex flex-col items-center justify-center space-y-5"
       >
-        <h1 class="font-bold">Nyabihu Stadium</h1>
-        <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-10">
-          <div class="space-y-4">
+        <h1 class="font-bold">{{match.venue}}</h1>
+        <div
+          class="w-full flex flex-col sm:flex-row justify-center gap-10"
+        >
+          <div class="space-y-4 flex flex-col sm:items-end w-full">
             <div class="flex items-center gap-3">
               <img
-                src="assets/svgs/Frame.png"
-                alt="portugal"
+                [src]="match.homeTeam.logo"
+                [alt]="match.homeTeam.name"
                 class="object-cover rounded-full h-10 w-10"
               />
-              <p class="font-semibold">Argentina</p>
+              <p class="font-semibold">{{match.homeTeam.name}}</p>
             </div>
             <div class="flex flex-col text-neutral-900 dark:text-neutral-300">
-              <div class="" *ngFor="let item of [23, 4, 56, 90]">
-                {{ shortenedName }} {{ item }}'
+              <div *ngFor="let event of match.homeTeamEvents">
+                {{event.player}} {{event.timestamp}}'
               </div>
             </div>
           </div>
-          <div class="font-bold">2 FT 3</div>
-          <div class="space-y-4">
+          <h3 class="font-bold whitespace-nowrap self-center">{{match.homeTeamGoals}} FT {{match.awayTeamGoals}}</h3>
+          <div class="space-y-4 w-full">
             <div class="flex items-center gap-3">
               <img
-                src="assets/svgs/Frame.png"
-                alt="portugal"
+                [src]="match.awayTeam.logo"
+                [alt]="match.awayTeam.name"
                 class="object-cover rounded-full h-10 w-10"
               />
-              <p class="font-semibold">Argentina</p>
+              <p class="font-semibold">{{match.awayTeam.name}}</p>
             </div>
             <div class="flex flex-col text-neutral-900 dark:text-neutral-300">
-              <div class="" *ngFor="let item of [23, 4, 56, 90]">
-                {{ shortenedName }} {{ item }}'
+              <div *ngFor="let event of match.awayTeamEvents">
+                {{event.player}} {{event.timestamp}}'
               </div>
             </div>
           </div>
@@ -64,8 +66,12 @@
       alt="player"
       class="absolute opacity-40 top-0 left-0 object-contain w-full h-full"
     />
-    <h1 class="text-2xl xs:text-3xl sm:text-6xl font-serif text-white">MAN OF THE MATCH</h1>
-    <h1 class="text-xl xs:text-2xl sm:text-6xl font-[blackone] text-light-gold">FADHILI Josue</h1>
+    <h1 class="text-2xl xs:text-3xl sm:text-6xl font-serif text-white">
+      MAN OF THE MATCH
+    </h1>
+    <h1 class="text-xl xs:text-2xl sm:text-6xl font-[blackone] text-light-gold">
+      {{match.manOfTheMatch.name}}
+    </h1>
   </div>
   <div class="dark:text-white my-5">
     <div class="flex flex-col md:flex-row gap-5">
@@ -73,55 +79,53 @@
         <app-chart />
         <h1 class="p-5 text-2xl font-bold text-stone-400">Club Reports</h1>
         <p class="m-3 sm:m-5 text-sm xs:text-base">
-          Aston Villa got back to winning ways and made it 13 straight home
-          Premier League victories with a 3-1 success over Fulham. Villa were
-          awarded a penalty on eight minutes for a handball by Timothy Castagne,
-          but referee Simon Hooper was sent to the Referee Review Area by the
-          VAR as the ball was seen to hit the Fulham defender's face, and not
-          his arm, with the decision subsequently overturned. Villa took the
-          lead on 27 minutes, with Youri Tielemans' left-wing cross aimed
-          towards Moussa Diaby inadvertently turned into his own net by Antonee
-          Robinson. The home side doubled their advantage three minutes before
-          half-time through captain John McGinn, who whipped a superb shot into
-          the bottom-left corner from 20 yards. Fulham responded in the second
-          half, with Raul Jimenez's low strike tipped on to a post at
-          full-stretch by Emiliano Martinez and Willian dragging a shot narrowly
-          wide.
+          {{match.clubReport}}
         </p>
+        <div class="m-3 sm:m-5 mb-5">
+          <h1 class="py-5 text-2xl font-bold text-stone-400">
+            Match officials
+          </h1>
+          <div class="text-xs xs:text-base">
+            <p>Referee: <strong>{{match.referee}}</strong></p>
+            <p>Fourth Official: <strong>Darren Bond</strong></p>
+            <p>VAR: <strong>Robert Jones</strong></p>
+            <p>Assistant VAR: <strong>Dan Robathan</strong></p>
+          </div>
+        </div>
       </div>
       <div class="flex-[0.4] space-y-5">
         <div class="w-full rounded-3xl p-5 bg-white dark:bg-[#1B1C21]">
-          <h1 class="font-bold text-center">Team Statistics</h1>
+          <h1 class="font-bold text-center">Team Accuracy</h1>
           <div class="flex flex-col space-y-5">
             <div
-              *ngFor="let item of myRandomArray"
+              *ngFor="let stat of teamsAccuracies"
               class="w-full flex flex-col items-center"
             >
-              <h1 class="font-bold">Pass</h1>
+              <h1 class="font-bold">{{stat.title}}</h1>
               <div class="flex gap-2 w-full">
                 <div
                   class="flex flex-col w-1/2 text-strong-green dark:text-white"
                 >
-                  <span class="font-bold">{{ item[0] }}</span>
+                  <span class="font-bold">{{ stat.values.home }}</span>
                   <div
                     class="h-2 w-full rounded-full overflow-hidden bg-stone-300 dark:bg-stone-600"
                   >
                     <div
                       class="h-full ml-auto bg-strong-green dark:bg-light-green"
-                      [ngStyle]="{ 'width.%': item[0] }"
+                      [ngStyle]="{ 'width.%': stat.values.home}"
                     ></div>
                   </div>
                 </div>
                 <div class="flex flex-col w-1/2">
                   <span class="text-[#560617] font-bold dark:text-light-gold">{{
-                    item[1]
+                    stat.values.away
                   }}</span>
                   <div
                     class="h-2 w-full rounded-full overflow-hidden bg-stone-300 dark:bg-stone-600"
                   >
                     <div
                       class="h-full bg-[#560617] dark:bg-light-gold"
-                      [ngStyle]="{ 'width.%': item[1] }"
+                      [ngStyle]="{ 'width.%': stat.values.away }"
                     ></div>
                   </div>
                 </div>
@@ -131,54 +135,134 @@
         </div>
         <div class="w-full rounded-3xl p-5 bg-white dark:bg-[#1B1C21]">
           <h1 class="border-b border-b-stone-300 text-center font-bold pb-3">
-            team lineup
+            teams lineups
           </h1>
           <div class="flex justify-between gap-5">
             <div class="flex flex-col space-y-2 py-2">
+              <h1 class="font-semibold">Formation</h1>
+              <h2 class="mb-2 dark:text-stone-400 text-stone-600">{{match.homeTeamLineup.formation}}</h2>
               <div
                 *ngFor="
-                  let item of [
-                    { place: 'GK', name: 'c.rukundo' },
-                    { place: 'DF', name: 'D.ereira' },
-                    { place: 'DF', name: 'Pepe' },
-                    { place: 'DF', name: 'R.Dias' },
-                    { place: 'MF', name: 'B.Silva' },
-                    { place: 'MF', name: 'Bruno.F' },
-                    { place: 'MF', name: 'J.Palhinha' }
-                  ]
+                  let player of match.homeTeamLineup.startingEleven
                 "
-                class=""
+               
               >
                 <span class="mr-2 text-strong-green dark:text-light-green">{{
-                  item.place
+                  player.position
                 }}</span
-                ><span class="text-sm">{{ item.name }}</span>
+                ><span class="text-sm">{{ shortenName(player.name) }}</span>
               </div>
             </div>
-            <div class="flex flex-col  space-y-2 py-2">
+            <div class="flex flex-col space-y-2 py-2">
+              <h1 class="font-semibold">Formation</h1>
+              <h2 class="mb-2 dark:text-stone-400 text-stone-600">{{match.homeTeamLineup.formation}}</h2>
               <div
                 *ngFor="
-                  let item of [
-                  { place: 'GK', name: 'c.rukundo' },
-                    { place: 'DF', name: 'D.ereira' },
-                    { place: 'DF', name: 'Pepe' },
-                    { place: 'DF', name: 'R.Dias' },
-                    { place: 'MF', name: 'B.Silva' },
-                    { place: 'MF', name: 'Bruno.F' },
-                    { place: 'MF', name: 'J.Palhinha' }
-                  ]
+                  let player of match.homeTeamLineup.startingEleven
                 "
-                class=""
+               
               >
                 <span class="mr-2 text-[#560617] dark:text-light-gold">{{
-                  item.place
+                  player.position
                 }}</span>
-                <span class="text-sm">{{ item.name }}</span>
+                <span class="text-sm">{{ shortenName(player.name) }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <!-- STATS TABLE -->
+    <div class="w-full p-5 text-xs sm:text-base my-5 rounded-3xl bg-white dark:bg-[#1B1C21]">
+      <table class="w-full table-fixed text-center">
+        <thead
+          class="relative before:content-[''] before:w-full before:absolute before:bottom-0 before:left-0 before:h-[0.10rem] before:bg-stone-300"
+        >
+          <tr>
+            <th>
+              <a
+                [routerLink]="['/user/34', 23]"
+                class="flex items-center justify-center gap-1 sm:gap-4"
+              >
+                <img
+                  class="h-7 w-7 sm:h-10 sm:w-10 rounded-full"
+                  [src]="match.homeTeam.logo"
+                  [alt]="match.homeTeam.name"
+                />
+                {{match.homeTeam.name}}
+              </a>
+            </th>
+            <th>&nbsp;</th>
+            <th>
+              <a href="/" class="flex items-center justify-center gap-1 sm:gap-4">
+                <img
+                  class="h-7 w-7 sm:h-10 sm:w-10 rounded-full"
+                  [src]="match.awayTeam.logo"
+                  [alt]="match.awayTeam.name"
+                />
+                {{match.awayTeam.name}}
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="whitespace-nowrap [&>tr]:border-b table-fixed">
+          <tr>
+            <td><p>{{match.homeTeamStats.possession}}</p></td>
+            <td><p>Possession %</p></td>
+            <td><p>{{match.awayTeamStats.possession}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.shotsOnTarget}}</p></td>
+            <td><p>Shots on target</p></td>
+            <td><p>{{match.awayTeamStats.shotsOnTarget}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.shots}}</p></td>
+            <td><p>Shots</p></td>
+            <td><p>{{match.awayTeamStats.shots}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.passes}}</p></td>
+            <td><p>Passes</p></td>
+            <td><p>{{match.awayTeamStats.passes}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.tackles}}</p></td>
+            <td><p>Tackles</p></td>
+            <td><p>{{match.awayTeamStats.tackles}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.corners}}</p></td>
+            <td><p>Corners</p></td>
+            <td><p>{{match.awayTeamStats.corners}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.Offsides}}</p></td>
+            <td><p>Offsides</p></td>
+            <td><p>{{match.awayTeamStats.Offsides}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.yellowCards}}</p></td>
+            <td><p>Yellow cards</p></td>
+            <td><p>{{match.awayTeamStats.yellowCards}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.redCards}}</p></td>
+            <td><p>Red cards</p></td>
+            <td><p>{{match.awayTeamStats.redCards}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.foulsConceded}}</p></td>
+            <td><p>Fouls conceded</p></td>
+            <td><p>{{match.awayTeamStats.foulsConceded}}</p></td>
+          </tr>
+          <tr>
+            <td><p>{{match.homeTeamStats.freeKicks}}</p></td>
+            <td><p>Free kicks</p></td>
+            <td><p>{{match.awayTeamStats.freeKicks}}</p></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

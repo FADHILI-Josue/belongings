@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { fixturesQuery, matchesQuery, playerStatsQuery, playersQuery, standingsQuery, teamStatsQuery, teamsQuery } from '../../lib/queries'
+import { fixturesQuery, matchQuery, matchesQuery, playerStatsQuery, playersQuery, standingsQuery, teamStatsQuery, teamsQuery } from '../../lib/queries'
 import { SanityClientService } from '../sanity-client.service';
 import { Club, Player, fixture } from './data.types';
 import { format } from 'date-fns';
@@ -20,6 +20,7 @@ export class DataService {
   private playersSubject: BehaviorSubject<Player[]> = new BehaviorSubject<any>(null);
   private loadingSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private teamStatsSubject: BehaviorSubject<Record<string,TeamStats[]>> = new BehaviorSubject<any>(false);
+  private matchSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
 
   public readonly playedMatches$: Observable<any> = this.playedMatchesSubject.asObservable();
@@ -30,6 +31,7 @@ export class DataService {
   public readonly players$: Observable<Player[]> = this.playersSubject.asObservable()
   public readonly playerStats$: Observable<Record<string,PlayerStats[]>> = this.playerStatsSubject.asObservable()
   public readonly teamStats$: Observable<Record<string,TeamStats[]>> = this.teamStatsSubject.asObservable()
+  public readonly match$: Observable<any> = this.matchSubject.asObservable()
 
 
   async getMatches() {
@@ -95,14 +97,30 @@ export class DataService {
       });
   }
 
+  async getMatch(matchId: string):Promise<void> {
+    this.loadingSubject.next(true);
+    await this.sanityClient
+      .fetch(matchQuery, {id: matchId})
+      .then(result => {
+        console.log(result[0]);
+        this.matchSubject.next(result[0]);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      })
+      .finally(() => {
+        this.loadingSubject.next(false);
+      });
+  }
+
   async getPlayerStats():Promise<void> {
     this.loadingSubject.next(true);
     await this.sanityClient
       .fetch(playerStatsQuery)
       .then(result => {
-        console.log(result)
         const refinedValues = result.map((result:any) => ({
           ...result,
+          // TODO: add the redcards and yellow cards using hte same logic as goals
           goals: result.goals.reduce((accumulator:number, currentValue:{count:number}) => accumulator + currentValue.count, 0),
           assists: result.assists.reduce((accumulator:number, currentValue:{count:number}) => accumulator + currentValue.count, 0),
           passes: result.passes.reduce((accumulator:number, currentValue:number) => accumulator + currentValue, 0),
@@ -120,6 +138,7 @@ export class DataService {
         this.loadingSubject.next(false);
       });
   }
+
 
   async getTeamStats():Promise<void> {
     this.loadingSubject.next(true);
@@ -243,7 +262,6 @@ const getTeamStats =(data:any[]): {
   mostShots: TeamStats[];
   mostFreeKicks: TeamStats[];
 } => {
-  console.log(data);
   return {
     mostCorners: sortTeamsBy(data,'corners').map((e:any)=>({...e, value: e.corners})).slice(0,10),
     mostShotsOnTarget: sortTeamsBy(data,'shotsOnTarget').map((e:any)=>({...e, value: e.shotsOnTarget})).slice(0,10),
@@ -251,3 +269,74 @@ const getTeamStats =(data:any[]): {
     mostFreeKicks: sortTeamsBy(data,'freeKicks').map((e:any)=>({...e, value: e.freeKicks})).slice(0,10),
   };
 }
+
+
+
+
+
+
+
+/**
+ * the desired match schema after fixing yellow and red cards
+ 
+*[_type == 'match' && _id==$id] {
+//   venue,
+//   homeTeam->{
+//     name,
+//     "logo": logo.asset.url
+//     },
+//   awayTeam->{
+//     name,
+//     "logo": logo.asset.url
+//   },
+//   'homeTeamGoals': count(goals[scorer->team->_id == ^.homeTeam->_id]),
+//   'awayTeamGoals': count(goals[scorer->team->_id == ^.awayTeam->_id ]),
+//   "homeTeamEvents": [
+//     ...goals[team._ref == ^.homeTeam->_id],
+//     ...yellowCards[team._ref == ^.homeTeam->_id],
+//     ...redCards[team._ref == ^.homeTeam->_id],
+//   ],
+//   "awayTeamEvents": [ 
+//     ...goals[team._ref == ^.awayTeam->_id],
+//     ...yellowCards[team._ref == ^.awayTeam->_id],
+//     ...redCards[team._ref == ^.awayTeam->_id],
+//   ],
+//   manOfTheMatch->{name},
+//   "homeTeamAccuracy": teamStats[team->_id == ^.homeTeam->_id]{
+//       cornersAccuracy,
+//         shootingAccuracy,
+//         passAccuracy,
+//         possession,
+//         tackleAccuracy,
+//         freeKickAccuracy
+//         }[0],
+//         "awayTeamAccuracy":
+//     teamStats[team->_id == ^.awayTeam->_id]{
+//       cornersAccuracy,
+//         shootingAccuracy,
+//         passAccuracy,
+//         possession,
+//         tackleAccuracy,
+//         freeKickAccuracy,
+//         }[0]
+// ,
+//       clubReport,
+//       "referee": referee->name,
+      "homeTeamStats": teamStats[team->_id == ^.homeTeam->_id] {
+      corners,
+        shotsOnTarget,
+        shots,
+        freeKicks,
+        "passes": math::sum(^.passes[team->_id == ^.^.homeTeam->_id].passes),
+      },
+      "awayTeamStats": teamStats[team->_id == ^.awayTeam->_id] {
+      corners,
+        shotsOnTarget,
+        shots,
+        freeKicks,
+        "passes": math::sum(^.passes[team->_id == ^.^.awayTeam->_id].passes),
+        // "passes": ^.tackles[team->_id == ^.^.awayTeam->_id].tackles,
+        // "passes": ^.tackles[team->_id == ^.^.awayTeam->_id].tackles,
+      }
+} | order(homeTeamEvents.timestamps, asc)
+ */

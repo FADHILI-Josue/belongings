@@ -30,80 +30,101 @@ export const fixturesQuery = `*[_type == 'match' && status == 'fixture'] | order
   'referee': referee->name,
 }
 `
-export const matchQuery = `*[_type == 'match' && status=='played' && _id==$id] | order(date asc) {
-  _id,
-  date,
+export const matchQuery = `
+*[_type == 'match' && _id==$id] {
   venue,
-  'homeTeam': {
-    'name': homeTeam->name,
-    'abbr': homeTeam->abbr,
-    'teamId': homeTeam->_id,
+  homeTeam->{
+    name,
+    "logo": logo.asset->url
+    },
+  awayTeam->{
+    name,
+    "logo": logo.asset->url
   },
-  'awayTeam': {
-    'name': awayTeam->name,
-    'abbr': awayTeam->abbr,
-    'teamId': awayTeam->_id,
-  },
-  'referee': referee->name,
-  goals[] {
-      scorer->{
-        'id':_id,
-        wearingNumber,
-        name,
-        position
-      },
+  'homeTeamGoals': count(goals[scorer->team->_id == ^.homeTeam->_id]),
+  'awayTeamGoals': count(goals[scorer->team->_id == ^.awayTeam->_id ]),
+  "homeTeamEvents": [
+    ...goals[team._ref == ^.homeTeam->_id]{
+      "player":scorer->name + " ⚽",
       timestamp
-  },
-  assists[] {
-    assister->{
-      'id':_id,
-      wearingNumber,
-      name,
-      position
     },
-    timestamp
-  },
-  yellowCards[]-> {
-    name,
-    wearingNumber,
-    position,
-    "image": image.asset->url
-  },
-  redCards[]-> {
-    name,
-    wearingNumber,
-    position,
-    "image": image.asset->url
-  },
-  teamStats[] {
-    team->{
-      "id": _id,
-      name,
-      abbr
+    ...yellowCards[team._ref == ^.homeTeam->_id]{
+      "player":player->name + " 🟨",
+      timestamp
     },
+    ...redCards[team._ref == ^.homeTeam->_id]{
+      "player":player->name + " 🟥",
+      timestamp
+    },
+  ] | order(timestamp),
+  "awayTeamEvents": [ 
+    ...goals[team._ref == ^.awayTeam->_id]{
+      "player":scorer->name + " ⚽",
+      timestamp
+    },
+    ...yellowCards[team._ref == ^.awayTeam->_id]{
+      "player":player->name + " 🟨",
+      timestamp
+    },
+    ...redCards[team._ref == ^.awayTeam->_id]{
+      "player":player->name + " 🟥",
+      timestamp
+    },
+  ] | order(timestamp),
+  manOfTheMatch->{name},
+  "homeTeamAccuracy": teamStats[team->_id == ^.homeTeam->_id]{
+    cornersAccuracy,
+    shootingAccuracy,
+    passAccuracy,
+    tackleAccuracy,
+    freeKickAccuracy
+  }[0],
+  "awayTeamAccuracy":
+    teamStats[team->_id == ^.awayTeam->_id]{
+    cornersAccuracy,
+    shootingAccuracy,
+    passAccuracy,
+    tackleAccuracy,
+    freeKickAccuracy,
+  }[0],
+  clubReport,
+  "referee": referee->name,
+  "homeTeamStats": teamStats[team->_id == ^.homeTeam->_id] {
     corners,
     shotsOnTarget,
     shots,
     freeKicks,
-    possession
-  },
-  homeTeamLineup {
+    possession,
+    Offsides,
+    foulsConceded,
+    "passes": math::sum(^.passes[team->_id == ^.^.homeTeam->_id].passes),
+    "tackles": math::sum(^.tackles[team->_id == ^.^.homeTeam->_id].tackles),
+    "yellowCards":coalesce(count( ^.yellowCards[team->_id == ^.^.homeTeam->_id])),
+    "redCards":coalesce(count( ^.redCards[team->_id == ^.^.homeTeam->_id]),0),
+  }[0],
+  "awayTeamStats": teamStats[team->_id == ^.awayTeam->_id] {
+    corners,
+    shotsOnTarget,
+    shots,
+    freeKicks,
+    possession,
+    Offsides,
+    foulsConceded,
+    "passes": math::sum(^.passes[team->_id == ^.^.awayTeam->_id].passes),
+    "tackles": math::sum(^.tackles[team->_id == ^.^.awayTeam->_id].tackles),
+    "yellowCards":coalesce(count( ^.yellowCards[team->_id == ^.^.awayTeam->_id])),
+    "redCards":coalesce(count( ^.redCards[team->_id == ^.^.awayTeam->_id]),0),
+  }[0],
+  homeTeamLineup{
     formation,
-    startingEleven[]->{
-      "image":image.asset->url,
-      position,
-      
-    }
+    startingEleven[]->{name, position}
   },
-  awayTeamLineup {
+  awayTeamLineup{
     formation,
-    startingEleven[]->{
-      "image":image.asset->url,
-      position,
-      
-    }
-  },
-}`
+    startingEleven[]->{name, position}
+  }
+}
+`
 
 export const matchesQuery = `*[_type == 'match' && status=='played'] | order(date asc) {
   _id,
@@ -119,8 +140,8 @@ export const matchesQuery = `*[_type == 'match' && status=='played'] | order(dat
     abbr,
     "logo":logo.asset->url,
   },
-  'homeGoals': count(goals[scorer->team->name == ^.homeTeam->name]),
-  'awayGoals': count(goals[scorer->team->name == ^.awayTeam->name ])
+  'homeGoals': count(goals[scorer->team->_id == ^.homeTeam->_id]),
+  'awayGoals': count(goals[scorer->team->_id == ^.awayTeam->_id ])
 }
 `
 

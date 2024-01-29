@@ -66,6 +66,13 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'manOfTheMatch',
+      title: 'Man Of The Match',
+      type: 'reference',
+      description: 'man of the match',
+      to: { type: 'player' }
+    }),
+    defineField({
       name: 'assists',
       title: 'Assists',
       type: 'array',
@@ -114,7 +121,16 @@ export default defineType({
       name: 'yellowCards',
       title: 'Yellow Cards',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'player' }] }],
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'player', title: 'player', type: 'reference', to: [{ type: 'player' }] },
+            { name: 'team', title: 'team', type: 'reference', to: [{ type: 'team' }] },
+            { name: 'timestamp', title: 'Timestamp', type: 'number' },
+          ],
+        },
+      ],
     }),
     defineType({
       name: "homeTeamLineup",
@@ -130,7 +146,16 @@ export default defineType({
       name: 'redCards',
       title: 'red Cards',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'player' }] }],
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'rplayer', title: 'player', type: 'reference', to: [{ type: 'player' }] },
+            { name: 'team', title: 'team', type: 'reference', to: [{ type: 'team' }] },
+            { name: 'timestamp', title: 'Timestamp', type: 'number' },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'referee',
@@ -173,14 +198,56 @@ export default defineType({
               type: 'number',
             },
             {
+              name: 'passAccuracy',
+              title: 'pass accuracy',
+              type: 'number',
+              validation: Rule => Rule.required().min(0).max(100),
+            },
+            {
+              name: 'shootingAccuracy',
+              title: 'shooting accuracy',
+              type: 'number',
+              validation: Rule => Rule.required().min(0).max(100)
+            },
+            {
+              name: 'freeKickAccuracy',
+              title: 'free kick accuracy',
+              type: 'number',
+              validation: Rule => Rule.required().min(0).max(100)
+            },
+            {
+              name: 'cornersAccuracy',
+              title: 'corners accuracy',
+              type: 'number',
+              validation: Rule => Rule.required().min(0).max(100)
+            },
+            {
+              name: 'tackleAccuracy',
+              title: 'tackle accuracy',
+              type: 'number',
+              validation: Rule => Rule.required().min(0).max(100)
+            },
+
+            {
               name: 'freeKicks',
               title: 'Free Kicks',
+              type: 'number',
+            },
+            {
+              name: 'Offsides',
+              title: 'Offsides',
+              type: 'number',
+            },
+            {
+              name: 'foulsConceded',
+              title: 'Fouls conceded',
               type: 'number',
             },
             {
               name: 'possession',
               title: 'Possession (%)',
               type: 'number',
+              validation: Rule => Rule.required().min(0).max(100)
             },
           ],
         },
