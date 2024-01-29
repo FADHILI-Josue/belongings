@@ -1,27 +1,53 @@
-# League
+# belongings league
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
+## Overview
 
-## Development server
+belongings leauge is project made when exploring angular, aims to provide a centralized platform for managing and displaying essential information such as statistics, fixtures, and tables for the ongoing football competitions for belongings league within the school.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Table of Contents
 
-## Code scaffolding
+- [How to Contribute](#how-to-contribute)
+- [Opening Issues](#opening-issues)
+- [License](#license)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+#### Tech Stack
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+> cms
 
-## Running unit tests
+  - sanity
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+> Frontend
 
-## Running end-to-end tests
+  - angular
+  - tailwind
+  - sanity client
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## How to Contribute
 
-## Further help
+1. **Fork the Repository:** Click on the "Fork" button at the top right corner of the page to create your own copy of the repository.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. **Clone the Repository:** Clone the forked repository to your local machine using the following command:
+   ```bash
+   git clone https://github.com/FADHILI-Josue/belongings.git
+   ```
+3. **Create a new Branch** use the following command to make a new branch:
+    ```bash
+    git checkout -b feature/new-feature
+    ```
+4. Make Changes
+5. make a new commit and follow commit conventions
+6. push changes:
+    ```bash
+    git push origin feature/new-feature
+
+    ```
+
+### Opening Issues
+If you encounter any bugs, have suggestions, or would like to propose new features, please open an issue in the Issues section.
+
+### LICENSE
+This project is licensed under the MIT License.
+
+
+If you find this project interesting or useful, consider leaving a star to show your appreciation!
