@@ -44,10 +44,14 @@ belongings leauge is project made when exploring angular, aims to provide a cent
     ```
 
 ### Opening Issues
-If you encounter any bugs, have suggestions, or would like to propose new features, please open an issue in the Issues section.
+If you encounter any bugs, have suggestions, or would like to propose new features, please open an [issue][issues] in the Issues section.
 
 ### LICENSE
 This project is licensed under the MIT License.
 
 
 If you find this project interesting or useful, consider leaving a star to show your appreciation!
+
+
+
+[issues]: https://github.com/FADHILI-Josue/belongings/issues
